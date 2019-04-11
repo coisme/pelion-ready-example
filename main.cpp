@@ -136,23 +136,6 @@ int main(void) {
     printf("Connecting to the network using the default network interface...\n");
     net = NetworkInterface::get_default_instance();
 
-/*
-    if(net->ethInterface()) {
-        printf("Ethernet\n");
-    }
-    if(net->wifiInterface()) {
-        printf("Wi-Fi\n");
-    }
-    if(net->meshInterface()) {
-        printf("Mesh\n");
-    }
-    if(net->cellularBase()) {
-        printf("Cellular\n");
-    }
-    if(net->emacInterface()) {
-        printf("Emac\n");
-    }
-*/
     if(net->cellularBase()) {
         printf("Network interface is cellular. Setting APN info...");
         /* Set Pin code for SIM card */
