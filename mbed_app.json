@@ -16,6 +16,7 @@
             "target.app_offset"                     : "0x10400",
             "target.header_offset"                  : "0x10000",
             "target.bootloader_img"                 : "bootloader/mbed-bootloader-WIO_3G.bin",
+            "mbed-cloud-client.external-sst-support" : null,
             "sd.SPI_MOSI"                           : "PC_12",
             "sd.SPI_MISO"                           : "PC_11",
             "sd.SPI_CLK"                            : "PC_10",
@@ -34,9 +35,9 @@
             "lwip.ppp-enabled"                      : true,
             "lwip.tcp-enabled"                      : true,
             "cellular.use-apn-lookup"               : false,
-            "apn"                                   : "\"soracom.io\"",
-            "username"                              : "\"sora\"",
-            "password"                              : "\"sora\""
+            "apn"                                   : "\"apn\"",
+            "username"                              : "\"username\"",
+            "password"                              : "\"username\""
         },
         "K64F": {
             "target.components_add"                     : ["SD"],
