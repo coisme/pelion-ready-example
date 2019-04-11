@@ -9,6 +9,35 @@
             "nsapi.default-wifi-ssid"                   : "\"SSID\"",
             "nsapi.default-wifi-password"               : "\"Password\""
         },
+        "WIO_3G": {
+            "target.features_add"                   : ["STORAGE", "BOOTLOADER", "LWIP"],
+            "target.network-default-interface-type" : "CELLULAR",
+            "target.components_add"                 : ["SD"],
+            "target.app_offset"                     : "0x10400",
+            "target.header_offset"                  : "0x10000",
+            "target.bootloader_img"                 : "bootloader/mbed-bootloader-WIO_3G.bin",
+            "sd.SPI_MOSI"                           : "PC_12",
+            "sd.SPI_MISO"                           : "PC_11",
+            "sd.SPI_CLK"                            : "PC_10",
+            "sd.SPI_CS"                             : "PD_0",
+            "update-client.application-details"     : "(0x08000000+64*1024)",
+            "update-client.storage-address"         : "(64*1024*1024)",
+            "update-client.storage-size"            : "(2*1024*1024)",
+            "update-client.storage-locations"       : "1",
+            "device-management.sotp-section-1-address" : "(0x08008000)",
+            "device-management.sotp-section-1-size"    : "(16*1024)",
+            "device-management.sotp-section-2-address" : "(0x0800C000)",
+            "device-management.sotp-section-2-size"    : "(16*1024)",
+            "device-management.sotp-num-sections"      : 2,
+            "lwip.ipv4-enabled"                     : true,
+            "lwip.ethernet-enabled"                 : false,
+            "lwip.ppp-enabled"                      : true,
+            "lwip.tcp-enabled"                      : true,
+            "cellular.use-apn-lookup"               : false,
+            "apn"                                   : "\"soracom.io\"",
+            "username"                              : "\"sora\"",
+            "password"                              : "\"sora\""
+        },
         "K64F": {
             "target.components_add"                     : ["SD"],
             "device-management.flash-start-address"     : "0x0",
@@ -736,6 +765,22 @@
         "tests-fs-size": {
             "help": "Maximum size of the file system used for tests",
             "value": null
+        },
+        "sim-pin-code": {
+            "help": "SIM PIN code",
+            "value": "\"0000\""
+        },
+        "apn": {
+            "help": "The APN string to use for this SIM/network, set to 0 if none",
+            "value": "\"internet\""
+        },
+        "username": {
+            "help": "The user name string to use for this APN, set to zero if none",
+            "value": 0
+        },
+        "password": {
+            "help": "The password string to use for this APN, set to 0 if none",
+            "value": 0
         }
     }
 }
