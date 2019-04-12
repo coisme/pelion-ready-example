@@ -22,6 +22,10 @@
 #include "FATFileSystem.h"
 #include "LittleFileSystem.h"
 
+#if defined(TARGET_WIO_3G)
+DigitalOut SD_POWER(PA_15, 1);
+#endif
+
 // Default network interface object. Don't forget to change the WiFi SSID/password in mbed_app.json if you're using WiFi.
 NetworkInterface *net = NetworkInterface::get_default_instance();
 
