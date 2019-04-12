@@ -22,9 +22,12 @@
 #include "FATFileSystem.h"
 #include "LittleFileSystem.h"
 
+#include "string.h"
+
 #if defined(TARGET_WIO_3G)
 DigitalOut SD_POWER(PA_15, 1);
-#endif
+#include "Wio_LED.h"
+#endif // TARGET_WIO_3G
 
 // Default network interface object. Don't forget to change the WiFi SSID/password in mbed_app.json if you're using WiFi.
 NetworkInterface *net = NetworkInterface::get_default_instance();
@@ -44,9 +47,6 @@ LittleFileSystem fs("fs");
 InterruptIn button(BUTTON1);
 #endif /* USE_BUTTON */
 
-// Default LED to use for PUT/POST example
-DigitalOut led(LED1, 0);
-
 // Declaring pointers for access to Pelion Device Management Client resources outside of main()
 MbedCloudClientResource *button_res;
 MbedCloudClientResource *led_res;
@@ -57,17 +57,16 @@ MbedCloudClientResource *post_res;
 EventQueue eventQueue;
 
 /**
- * PUT handler - sets the value of the built-in LED
+ * PUT handler.
  * @param resource The resource that triggered the callback
  * @param newValue Updated value for the resource
  */
 void put_callback(MbedCloudClientResource *resource, m2m::String newValue) {
     printf("PUT received. New value: %s\n", newValue.c_str());
-    led = atoi(newValue.c_str());
 }
 
 /**
- * POST handler - prints the content of the payload
+ * POST handler - prints the content of the payload and change the LED color.
  * @param resource The resource that triggered the callback
  * @param buffer If a body was passed to the POST function, this contains the data.
  *               Note that the buffer is deallocated after leaving this function, so copy it if you need it longer.
@@ -79,6 +78,25 @@ void post_callback(MbedCloudClientResource *resource, const uint8_t *buffer, uin
         printf("%02x ", buffer[ix]);
     }
     printf("\n");
+
+    ws2812_color led_color = WS2812_BLACK;
+    if(strncasecmp((const char*)buffer,"red", size) == 0) {
+        led_color = WS2812_RED;
+    } else if(strncasecmp((const char*)buffer,"green", size) == 0) {
+        led_color = WS2812_GREEN;
+    } else if(strncasecmp((const char*)buffer,"yellow", size) == 0) {
+        led_color = WS2812_YELLOW;
+    } else if(strncasecmp((const char*)buffer,"blue", size) == 0) {
+        led_color = WS2812_BLUE;
+    } else if(strncasecmp((const char*)buffer,"white", size) == 0) {
+        led_color = WS2812_WHITE;
+    } else if(strncasecmp((const char*)buffer,"black", size) == 0) {
+        led_color = WS2812_BLACK;
+    } else {
+        // ignore
+        return;
+    }
+    setColor(led_color);
 }
 
 /**
@@ -123,7 +141,7 @@ int main(void) {
         printf("User button is pushed on start...\n");
     }
 #else
-    bool btn_pressed = FALSE;
+    bool btn_pressed = false;
 #endif /* USE_BUTTON */
 
     if (storage_status || btn_pressed) {
@@ -173,12 +191,12 @@ int main(void) {
     button_res->observable(true);
     button_res->attach_notification_callback(button_callback);
 
-    led_res = client.create_resource("3201/0/5853", "led_state");
-    led_res->set_value(led.read());
+    led_res = client.create_resource("3201/0/5853", "dummy");
+    led_res->set_value(0);
     led_res->methods(M2MMethod::GET | M2MMethod::PUT);
     led_res->attach_put_callback(put_callback);
 
-    post_res = client.create_resource("3300/0/5605", "execute_function");
+    post_res = client.create_resource("3300/0/5605", "led_color");
     post_res->methods(M2MMethod::POST);
     post_res->attach_post_callback(post_callback);
 
