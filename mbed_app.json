@@ -32,9 +32,10 @@
             "lwip.ppp-enabled"                      : true,
             "lwip.tcp-enabled"                      : true,
             "cellular.use-apn-lookup"               : false,
-            "apn"                                   : "\"apn\"",
-            "username"                              : "\"username\"",
-            "password"                              : "\"username\""
+            "nsapi.default-cellular-sim-pin"        : "\"0000\"",
+            "nsapi.default-cellular-apn"            : "\"apn\"",
+            "nsapi.default-cellular-username"       : "\"username\"",
+            "nsapi.default-cellular-password"       : "\"password\""
         }
     },
     "config": {
@@ -61,22 +62,6 @@
         "tests-fs-size": {
             "help": "Maximum size of the file system used for tests",
             "value": null
-        },
-        "sim-pin-code": {
-            "help": "SIM PIN code",
-            "value": "\"0000\""
-        },
-        "apn": {
-            "help": "The APN string to use for this SIM/network, set to 0 if none",
-            "required": true
-        },
-        "username": {
-            "help": "The user name string to use for this APN, set to zero if none",
-            "required": true
-        },
-        "password": {
-            "help": "The password string to use for this APN, set to 0 if none",
-            "required": true
         }
     }
 }

@@ -157,15 +157,6 @@ int main(void) {
     // Connect to the Internet (DHCP is expected to be on)
     printf("Connecting to the network using the default network interface...\n");
     net = NetworkInterface::get_default_instance();
-    CellularInterface* cellular = net->cellularInterface();
-
-    if(cellular) {
-        printf("Network interface is cellular. Setting APN info...\n");
-        /* Set Pin code for SIM card */
-        cellular->set_sim_pin(MBED_CONF_APP_SIM_PIN_CODE);
-        /* Set network credentials here, e.g., APN */
-        cellular->set_credentials(MBED_CONF_APP_APN, MBED_CONF_APP_USERNAME, MBED_CONF_APP_PASSWORD);
-    }
 
     nsapi_error_t net_status = NSAPI_ERROR_NO_CONNECTION;
     while ((net_status = net->connect()) != NSAPI_ERROR_OK) {
