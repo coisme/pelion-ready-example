@@ -4,10 +4,7 @@
             "target.components_remove"                  : ["FLASHIAP"],
             "platform.stdio-baud-rate"                  : 115200,
             "platform.stdio-convert-newlines"           : true,
-            "mbed-trace.enable"                         : null,
-            "nsapi.default-wifi-security"               : "WPA_WPA2",
-            "nsapi.default-wifi-ssid"                   : "\"SSID\"",
-            "nsapi.default-wifi-password"               : "\"Password\""
+            "mbed-trace.enable"                         : null
         },
         "WIO_3G": {
             "target.features_add"                   : ["STORAGE", "BOOTLOADER", "LWIP"],
@@ -71,15 +68,15 @@
         },
         "apn": {
             "help": "The APN string to use for this SIM/network, set to 0 if none",
-            "value": "\"internet\""
+            "required": true
         },
         "username": {
             "help": "The user name string to use for this APN, set to zero if none",
-            "value": 0
+            "required": true
         },
         "password": {
             "help": "The password string to use for this APN, set to 0 if none",
-            "value": 0
+            "required": true
         }
     }
 }
